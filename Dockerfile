@@ -4,12 +4,11 @@ FROM golang:1.21-alpine as builder
 # 设置工作目录
 WORKDIR /app
 
-# 将从 ahui2016/temp-files 仓库中检出的源代码复制到容器中
+# 从 ahui2016/temp-files 仓库中检出的源代码复制到容器中
 COPY app/ .
-# 将Go模块和源代码复制到容器中
-COPY go.mod go.sum ./
+
+# 下载所有依赖项
 RUN go mod download
-COPY . .
 
 # 构建应用
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
