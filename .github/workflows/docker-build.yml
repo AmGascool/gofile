@@ -24,10 +24,15 @@ jobs:
         repository: 'ahui2016/temp-files'
         path: 'app'
 
+    - name: Check out this repository
+      uses: actions/checkout@v4
+      with:
+        path: 'gofile'
+
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
         context: .
+        file: ./gofile/Dockerfile
         push: true
         tags: amgascool/gofile:latest
-        file: ./Dockerfile
