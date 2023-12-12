@@ -23,7 +23,7 @@ USER appuser
 WORKDIR /home/appuser
 
 # 从builder阶段复制二进制文件
-COPY --from=builder /app/main .
+COPY --from=builder /app/main /app/app_config_default.toml .
 
 # 暴露端口
 EXPOSE 5000
