@@ -16,11 +16,13 @@ COPY . .
 # 构建应用
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
-# 使用scratch作为轻量级基础镜像
+# 使用alpine作为轻量级基础镜像
 FROM alpine:latest
 
+# 添加ca证书
 RUN apk --no-cache add ca-certificates
 
+# 设置工作目录
 WORKDIR /root/
 
 # 从builder阶段复制二进制文件
