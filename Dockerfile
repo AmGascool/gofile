@@ -1,3 +1,4 @@
+### Step one
 # 使用匹配的Go版本作为基础镜像
 FROM golang:1.21-alpine as builder
 
@@ -13,14 +14,11 @@ RUN go mod download
 # 构建应用
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
+### Step Two
 # 使用alpine作为轻量级基础镜像
 FROM alpine:latest
 
-# 添加非 root 用户
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
-WORKDIR /home/appuser
+WORKDIR /root
 
 # 从builder阶段复制二进制文件
 COPY --from=builder /app/main /app/app_config_default.toml .
